@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/CMakeFiles/kissfft-populate"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/CMakeFiles/kissfft-populate.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/CMakeFiles/kissfft-populate-complete.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-build.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-configure.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-download.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-install.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-patch.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-test.rule"
+		},
+		{
+			"file" : "/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/kissfft-populate-prefix/src/kissfft-populate-stamp/kissfft-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"kissfft-populate"
+		],
+		"name" : "kissfft-populate"
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/utsab/PycharmProjects/InferenceEngine/build/cmake_install.cmake",
+		"/home/utsab/PycharmProjects/InferenceEngine/build/_deps/pybind11-build/cmake_install.cmake",
+		"/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
