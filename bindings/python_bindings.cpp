@@ -1,21 +1,20 @@
 #include <pybind11/pybind11.h>
-#include <pybind11/stl.h> // CRITICAL: Automatically converts std::vector <-> Python list
+#include <pybind11/stl.h>
 #include "audioguard/Preprocessor.h"
+#include "audioguard/AudioLoader.h" // <--- Make sure this is included
 
 namespace py = pybind11;
 
-// The module name here (audioguard_core) MUST match the one in CMakeLists.txt
 PYBIND11_MODULE(audioguard_core, m) {
-    
-    m.doc() = "AudioGuard C++ Core Module implemented with Pybind11";
+    m.doc() = "AudioGuard C++ Core Module";
 
-    // Expose the Preprocessor class to Python
+    // 1. Expose Preprocessor (The DSP Engine)
     py::class_<audioguard::Preprocessor>(m, "Preprocessor")
-        // 1. Expose the Constructor
         .def(py::init<>())
-        
-        // 2. Expose the process function
-        // Usage in Python: result_list = dsp.process(input_list)
-        .def("process", &audioguard::Preprocessor::process, 
-             "Takes a raw audio float list (16k), returns a flattened Mel-Spectrogram list.");
+        .def("process", &audioguard::Preprocessor::process);
+
+    // 2. Expose AudioLoader (The FFMPEG Loader) - THIS WAS MISSING
+    py::class_<audioguard::AudioLoader>(m, "AudioLoader")
+        .def_static("load_audio", &audioguard::AudioLoader::load_audio, 
+                    "Loads audio file, resamples to 16kHz Mono, returns float list.");
 }

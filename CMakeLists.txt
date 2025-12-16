@@ -9,6 +9,12 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Dependency Management
 include(FetchContent)
 
+# --- FFMPEG (Added as requested) ---
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
+    libavformat libavcodec libswresample libavutil
+)
+
 # --- PyBind11 ---
 FetchContent_Declare(
     pybind11
@@ -30,7 +36,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(kissfft)
 
 # Sources
-# Note: Ensure these files actually exist in 'src/'
 set(CORE_SOURCES
     src/Preprocessor.cpp
     src/AudioLoader.cpp
@@ -38,21 +43,21 @@ set(CORE_SOURCES
 )
 
 # --- Target 1: Python Module ---
-# CRITICAL: You must create the bindings folder!
 pybind11_add_module(audioguard_core
     bindings/python_bindings.cpp
     ${CORE_SOURCES}
 )
 
 target_include_directories(audioguard_core PRIVATE include)
-target_link_libraries(audioguard_core PRIVATE kissfft)
+# LINKING UPDATE: Added PkgConfig::LIBAV here
+target_link_libraries(audioguard_core PRIVATE kissfft PkgConfig::LIBAV)
 
 # --- Target 2: Executable ---
-# UPDATED: Changed 'app' to 'App' to match your folder
 add_executable(AudioGuardApp
     App/main.cpp
     ${CORE_SOURCES}
 )
 
 target_include_directories(AudioGuardApp PRIVATE include)
-target_link_libraries(AudioGuardApp PRIVATE kissfft)
+# LINKING UPDATE: Added PkgConfig::LIBAV here
+target_link_libraries(AudioGuardApp PRIVATE kissfft PkgConfig::LIBAV)

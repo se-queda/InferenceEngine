@@ -1,0 +1,24 @@
+name: audio_cpp_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # 1. Core Python
+  - python=3.10
+  - pip
+  - numpy
+  - librosa
+  
+  # 2. Build Tools
+  - cmake
+  - make
+  - pkg-config
+  - pybind11
+  
+  # 3. Compilers (The "Hermetic" Toolchain)
+  - gxx_linux-64
+  - gcc_linux-64
+  - sysroot_linux-64
+  
+  # 4. FFMPEG (Just one package contains all libav headers/libs)
+  - ffmpeg
