@@ -60,5 +60,42 @@ coverage.xml
 .DS_Store
 .ipynb_checkpoints
 
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.bak
+
+# OS-specific
+Thumbs.db
+.Trashes
+.AppleDouble
+
+# Python package management
+.tox/
+.nox/
+.pytype/
+
+# IDE/editor extras
+*.swp
+*.swo
+.vs/
+.vscode/settings.json
+
+# Docker/Container
+.dockerignore
+.env
+
+# Build artifacts (other)
+*.exe
+*.jar
+*.war
+*.zip
+*.tar.gz
+
+# User configs
+.env.local
+local_settings.py
+
 # Models
 model_lab/model_quantized.onnx

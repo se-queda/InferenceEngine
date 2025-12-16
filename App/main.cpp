@@ -4,6 +4,7 @@
 #include <numeric>   // for std::accumulate
 #include <algorithm> // for std::max_element
 #include <iomanip>   // for std::fixed, std::setprecision
+#include <chrono>    // <--- ADDED for timing
 
 #include "audioguard/AudioLoader.h"
 #include "audioguard/Preprocessor.h"
@@ -38,6 +39,18 @@ int main(int argc, char* argv[]) {
 
     try {
         // ---------------------------------------------------------
+        // Step 0: Initialize Engine (Cold Start)
+        // ---------------------------------------------------------
+        // We do this OUTSIDE the timer because in a real app, 
+        // the model is loaded once at startup.
+        std::cout << "[Init] Loading Model... ";
+        audioguard::InferenceEngine engine(model_path);
+        std::cout << "Ready.\n";
+
+        // --- START TIMER ---
+        auto start_time = std::chrono::high_resolution_clock::now();
+
+        // ---------------------------------------------------------
         // Step 1: The Ear (Load Audio via FFMPEG)
         // ---------------------------------------------------------
         std::cout << "[1/3] Loading Audio... ";
@@ -52,35 +65,32 @@ int main(int argc, char* argv[]) {
         auto features = dsp.process(raw_audio);
         
         // CRITICAL SAFETY CHECK
-        // Model expects [1, 30, 40, 1] = 1200 floats.
-        // If we don't have exactly this, ONNX Runtime will crash segfault.
         if (features.size() != 1200) {
             throw std::runtime_error("Feature mismatch! Preprocessor produced " + 
                                      std::to_string(features.size()) + 
                                      " features, but model expects 1200 (30x40).");
         }
         
-        // Define the shape your model expects (From prepare_model.py)
-        // [Batch, Time, Freq, Channels]
         std::vector<int64_t> input_shape = {1, 30, 40, 1}; 
-        
         std::cout << "Done. (1200 features generated)\n";
 
         // ---------------------------------------------------------
         // Step 3: The Brain (Inference via ONNX Runtime)
         // ---------------------------------------------------------
         std::cout << "[3/3] Running Inference... ";
-        audioguard::InferenceEngine engine(model_path);
         
+        // Engine is already loaded; we just predict now.
         auto logits = engine.predict(features, input_shape);
         std::cout << "Done.\n";
+
+        // --- STOP TIMER ---
+        auto end_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> ms_double = end_time - start_time;
 
         // ---------------------------------------------------------
         // Step 4: Interpret Results
         // ---------------------------------------------------------
         int predicted_idx = argmax(logits);
-        
-        // Softmax calculation for display (Optional, but looks professional)
         float max_logit = *std::max_element(logits.begin(), logits.end());
         float sum_exp = 0.0f;
         for (float l : logits) sum_exp += std::exp(l - max_logit);
@@ -100,6 +110,10 @@ int main(int argc, char* argv[]) {
             std::string label = (i < LABELS.size()) ? LABELS[i] : "Unknown";
             std::cout << "  " << label << ": " << prob * 100.0f << "%\n";
         }
+        
+        // PRINT TIMING RESULT
+        std::cout << "\n⏱️  Latency (Load+DSP+Infer): " << ms_double.count() << " ms\n";
+        std::cout << "------------------------------------------\n";
 
     } catch (const std::exception& e) {
         std::cerr << "\n❌ FATAL ERROR: " << e.what() << "\n";

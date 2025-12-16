@@ -1,0 +1,27 @@
+name: "audioguard"
+platform: "onnxruntime_onnx"
+max_batch_size: 8
+
+input [
+  {
+    name: "input_spectrogram"
+    data_type: TYPE_FP32
+    dims: [ 30, 40, 1 ]
+  }
+]
+
+output [
+  {
+    name: "dense_1"
+    data_type: TYPE_FP32
+    dims: [ 10 ]
+  }
+]
+
+# This block enables the RTX 4060
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU
+  }
+]
