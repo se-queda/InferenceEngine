@@ -22,3 +22,4 @@ dependencies:
   
   # 4. FFMPEG (Just one package contains all libav headers/libs)
   - ffmpeg
+  - onnxruntime-cpp

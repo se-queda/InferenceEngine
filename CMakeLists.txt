@@ -9,7 +9,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Dependency Management
 include(FetchContent)
 
-# --- FFMPEG (Added as requested) ---
+# --- FFMPEG (Clean PkgConfig Approach) ---
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
     libavformat libavcodec libswresample libavutil
@@ -35,6 +35,26 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(kissfft)
 
+
+
+# --- ONNX Runtime---
+find_path(ORT_INCLUDE_DIR onnxruntime_cxx_api.h
+    HINTS 
+    "$ENV{CONDA_PREFIX}/include/onnxruntime/core/session"
+    "$ENV{CONDA_PREFIX}/include"
+)
+
+find_library(ORT_LIB onnxruntime
+    HINTS "$ENV{CONDA_PREFIX}/lib"
+)
+
+if(ORT_INCLUDE_DIR AND ORT_LIB)
+    message(STATUS "Found ONNX Runtime Headers: ${ORT_INCLUDE_DIR}")
+    message(STATUS "Found ONNX Runtime Lib: ${ORT_LIB}")
+else()
+    message(FATAL_ERROR "Could not find onnxruntime. Check paths in CMakeLists.txt")
+endif()
+
 # Sources
 set(CORE_SOURCES
     src/Preprocessor.cpp
@@ -48,9 +68,8 @@ pybind11_add_module(audioguard_core
     ${CORE_SOURCES}
 )
 
-target_include_directories(audioguard_core PRIVATE include)
-# LINKING UPDATE: Added PkgConfig::LIBAV here
-target_link_libraries(audioguard_core PRIVATE kissfft PkgConfig::LIBAV)
+target_include_directories(audioguard_core PRIVATE include ${ORT_INCLUDE_DIR})
+target_link_libraries(audioguard_core PRIVATE kissfft PkgConfig::LIBAV ${ORT_LIB})
 
 # --- Target 2: Executable ---
 add_executable(AudioGuardApp
@@ -58,6 +77,5 @@ add_executable(AudioGuardApp
     ${CORE_SOURCES}
 )
 
-target_include_directories(AudioGuardApp PRIVATE include)
-# LINKING UPDATE: Added PkgConfig::LIBAV here
-target_link_libraries(AudioGuardApp PRIVATE kissfft PkgConfig::LIBAV)
+target_include_directories(AudioGuardApp PRIVATE include ${ORT_INCLUDE_DIR})
+target_link_libraries(AudioGuardApp PRIVATE kissfft PkgConfig::LIBAV ${ORT_LIB})
