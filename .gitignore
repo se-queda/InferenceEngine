@@ -1,0 +1,64 @@
+# C/C++ build outputs
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.d
+*.pdb
+*.mod
+*.smod
+*.stackdump
+*.out
+*.app
+
+# CMake and build directories
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Testing/
+Makefile
+Makefile2
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+CMakeOutput.log
+CMakeError.log
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+dist/
+*.manifest
+*.spec
+
+# Tool caches
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+.coverage*
+coverage.xml
+
+# Editors/IDE
+.idea/
+.vscode/
+.DS_Store
+.ipynb_checkpoints
+
+# Models
+model_lab/model_quantized.onnx

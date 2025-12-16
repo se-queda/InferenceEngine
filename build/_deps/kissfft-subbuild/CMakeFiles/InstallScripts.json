@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/utsab/PycharmProjects/InferenceEngine/build/_deps/kissfft-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
