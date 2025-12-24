@@ -21,8 +21,8 @@ except ImportError as e:
 def test_audioloader():
     print("\n--- Testing C++ AudioLoader (FFMPEG) ---")
 
-    # 2. Find a test file from your Downloads folder
-    # UPDATED: Pointing to where your data actually is
+    # 2. Find a test file from Downloads folder
+    # UPDATED: Pointing to where data actually is
     possible_paths = [
         "/home/utsab/Downloads/mini_speech_commands",
         "/home/utsab/Downloads/data/mini_speech_commands",
@@ -77,7 +77,6 @@ def test_audioloader():
          return
 
     # Check length similarity 
-    # (Resampling algorithms often differ by ~10-50 samples at the edges, which is fine)
     len_diff = abs(len(py_audio) - len(cpp_audio))
     
     if len_diff > 1000: 
