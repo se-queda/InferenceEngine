@@ -4,19 +4,19 @@
 #include <numeric>   // for std::accumulate
 #include <algorithm> // for std::max_element
 #include <iomanip>   // for std::fixed, std::setprecision
-#include <chrono>    // <--- ADDED for timing
+#include <chrono>    
 
 #include "audioguard/AudioLoader.h"
 #include "audioguard/Preprocessor.h"
 #include "audioguard/InferenceEngine.h"
 
-// Standard Mini Speech Commands Classes (Alphabetical Order)
+// Standard Mini Speech Commands Classes
 const std::vector<std::string> LABELS = {
     "down", "go", "left", "no", "off", 
     "on", "right", "stop", "up", "yes"
 };
 
-// Helper to find the index of the highest score (ArgMax)
+// Helper to find the index of the highest score
 int argmax(const std::vector<float>& scores) {
     return std::distance(scores.begin(), std::max_element(scores.begin(), scores.end()));
 }
@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
         std::cout << "------------------------------------------\n";
 
     } catch (const std::exception& e) {
-        std::cerr << "\n❌ FATAL ERROR: " << e.what() << "\n";
+        std::cerr << "\nFATAL ERROR: " << e.what() << "\n";
         return 1;
     }
 
