@@ -3,8 +3,6 @@ import os
 import numpy as np
 import time
 
-# 1. Setup Path to find the C++ module in 'build/'
-# This assumes you run the script from the project root
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_dir)
 build_dir = os.path.join(project_root, 'build')
@@ -13,10 +11,9 @@ sys.path.append(build_dir)
 
 try:
     import audioguard_core
-    print(f"✅ SUCCESS: Imported C++ module from {build_dir}")
+    print(f" Imported C++ module from {build_dir}")
 except ImportError as e:
-    print(f"❌ FAILED to import C++ module.")
-    print(f"   Make sure you built the project and 'audioguard_core.so' exists in:")
+    print(f"Failed to import C++ module.")
     print(f"   {build_dir}")
     print(f"   Error details: {e}")
     sys.exit(1)
