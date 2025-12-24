@@ -31,7 +31,7 @@ def create_dummy_model(path):
     # Force IR Version 10 
     model = helper.make_model(graph, producer_name='audioguard_test', ir_version=10)
     
-    # We also explicitly lower the Opset version to ensure compatibility
+    # Explicitly lowering the Opset version to ensure compatibility
     del model.opset_import[:]
     opset = model.opset_import.add()
     opset.domain = ""
