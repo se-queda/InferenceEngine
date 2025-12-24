@@ -18,7 +18,6 @@ except ImportError as e:
     sys.exit(1)
 
 def create_dummy_model(path):
-    """Creates a simple ONNX model compatible with C++ Runtime"""
     # Define input/output (Shape: [1, 10])
     input_info = helper.make_tensor_value_info('input', TensorProto.FLOAT, [1, 10])
     output_info = helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 10])
