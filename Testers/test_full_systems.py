@@ -35,7 +35,7 @@ def create_dummy_model(path):
     del model.opset_import[:]
     opset = model.opset_import.add()
     opset.domain = ""
-    opset.version = 12 # Opset 12 is very stable/compatible
+    opset.version = 12 
 
     onnx.save(model, path)
     print(f"Created dummy model (IR v10) at: {path}")
