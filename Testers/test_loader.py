@@ -12,9 +12,9 @@ sys.path.append(build_dir)
 
 try:
     import audioguard_core
-    print(f"✅ SUCCESS: Imported C++ module from {build_dir}")
+    print(f" Imported C++ module from {build_dir}")
 except ImportError as e:
-    print(f"❌ FAILED to import C++ module.")
+    print(f"FAILED to import C++ module.")
     print(f"   Error details: {e}")
     sys.exit(1)
 
@@ -60,11 +60,11 @@ def test_audioloader():
     # 4. Load using C++ AudioLoader
     print("Loading with C++ AudioLoader...")
     try:
-        # This calls your src/AudioLoader.cpp
+        # This calls src/AudioLoader.cpp
         cpp_audio_list = audioguard_core.AudioLoader.load_audio(test_file)
         cpp_audio = np.array(cpp_audio_list, dtype=np.float32)
     except Exception as e:
-        print(f"❌ C++ CRASHED: {e}")
+        print(f"C++ CRASHED: {e}")
         return
 
     # 5. Compare Results
@@ -73,7 +73,7 @@ def test_audioloader():
     print(f"   C++ Samples:    {len(cpp_audio)}")
     
     if len(cpp_audio) == 0:
-         print("❌ FAILED: C++ returned empty audio.")
+         print("C++ returned empty audio.")
          return
 
     # Check length similarity 
@@ -81,10 +81,10 @@ def test_audioloader():
     len_diff = abs(len(py_audio) - len(cpp_audio))
     
     if len_diff > 1000: 
-         print(f"❌ FAILED: Significant length mismatch ({len_diff} samples)")
+         print(f" Significant length mismatch ({len_diff} samples)")
          return
 
-    print("✅ PASSED: AudioLoader successfully decoded and resampled the file!")
+    print("AudioLoader successfully decoded and resampled the file!")
 
 if __name__ == "__main__":
     test_audioloader()
