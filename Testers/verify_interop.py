@@ -18,7 +18,7 @@ except ImportError as e:
     print(f"   Error details: {e}")
     sys.exit(1)
 
-# Import your Python DSP for comparison
+# Import Python DSP for comparison
 try:
     from dsp import DSP
 except ImportError:
@@ -57,14 +57,12 @@ def test_interoperability():
     print(f"   Python Shape: {py_result.shape}")
     
     # DYNAMIC SHAPE HANDLING
-    # We use the Python result to determine the expected shape.
-    # Typically (30, 40) for 16k audio with these STFT settings.
     expected_rows = py_result.shape[0]
     expected_cols = py_result.shape[1]
     expected_total = expected_rows * expected_cols
     
     if len(cpp_result_flat) != expected_total:
-        print(f"❌ SIZE MISMATCH:")
+        print(f" SIZE MISMATCH")
         print(f"   Python Produced: {expected_rows} x {expected_cols} = {expected_total} elements")
         print(f"   C++ Produced:    {len(cpp_result_flat)} elements")
         sys.exit(1)
@@ -89,11 +87,9 @@ def test_interoperability():
     print(f"   C++ Time:    {end_cpp - start_cpp:.6f} s")
     
     if is_match:
-        print("\n✅ PASSED: C++ implementation matches Python Gold Standard!")
+        print("C++ implementation matches Python Gold Standard!")
     else:
-        print("\n❌ FAILED: Outputs diverge.")
-        print("   If the Max Difference is small (< 0.05), it might be acceptable floating-point drift.")
-        print("   If it is large, check normalization or STFT windowing logic.")
+        print("\nOutputs diverge.")
 
 if __name__ == "__main__":
     test_interoperability()
