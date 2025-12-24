@@ -12,9 +12,9 @@ sys.path.append(build_dir)
 
 try:
     import audioguard_core
-    print(f"✅ SUCCESS: Imported C++ Module")
+    print(f" SUCCESS: Imported C++ Module")
 except ImportError as e:
-    print(f"❌ FAILED to import module: {e}")
+    print(f" FAILED to import module: {e}")
     sys.exit(1)
 
 def create_dummy_model(path):
@@ -29,7 +29,7 @@ def create_dummy_model(path):
     # Create Graph
     graph = helper.make_graph([node], 'test_graph', [input_info], [output_info])
     
-    # --- FIX: Force IR Version 10 (Compatible with C++ Runtime) ---
+    # Force IR Version 10 
     model = helper.make_model(graph, producer_name='audioguard_test', ir_version=10)
     
     # We also explicitly lower the Opset version to ensure compatibility
@@ -53,7 +53,7 @@ def test_inference():
     try:
         engine = audioguard_core.InferenceEngine(model_path)
     except Exception as e:
-        print(f"❌ Failed to load model: {e}")
+        print(f" Failed to load model: {e}")
         return
 
     # C. Create Fake Input (e.g., flattened spectrogram features)
@@ -71,12 +71,12 @@ def test_inference():
         
         # Check math (1.0 + 1.0 = 2.0)
         if abs(output[0] - 2.0) < 1e-5:
-            print("✅ PASSED: Inference Engine is running correctly!")
+            print(" PASSED: Inference Engine is running correctly!")
         else:
-            print("❌ FAILED: Output values are wrong.")
+            print(" FAILED: Output values are wrong.")
             
     except Exception as e:
-        print(f"❌ Prediction crashed: {e}")
+        print(f" Prediction crashed: {e}")
 
 if __name__ == "__main__":
     test_inference()
